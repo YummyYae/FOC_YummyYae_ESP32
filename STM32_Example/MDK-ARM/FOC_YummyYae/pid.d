@@ -1,0 +1,10 @@
+foc_yummyyae\pid.o: ..\USER\pid.c
+foc_yummyyae\pid.o: ..\USER\pid.h
+foc_yummyyae\pid.o: ..\USER\datatype.h
+foc_yummyyae\pid.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+foc_yummyyae\pid.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+foc_yummyyae\pid.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\string.h
+foc_yummyyae\pid.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+foc_yummyyae\pid.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+foc_yummyyae\pid.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\math.h
+foc_yummyyae\pid.o: ../USER/FOC/foc_calibrate.h

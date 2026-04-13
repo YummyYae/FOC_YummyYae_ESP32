@@ -1,0 +1,16 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "../FOC/foc_calibrate.c"
+        "../FOC/foc_lib.c"
+        "../FOC/foc_driver_esp32.c"
+        "../FOC/foc_task.c"
+        "../BSPDriver/MT6701.c"
+    INCLUDE_DIRS
+        ""
+        "../FOC"
+        ".."
+    REQUIRES
+        driver
+        nvs_flash
+)

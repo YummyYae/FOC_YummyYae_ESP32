@@ -1,0 +1,11 @@
+foc_yummyyae\ctrltask.o: ..\Task\CTRLtask.c
+foc_yummyyae\ctrltask.o: ..\Task\CTRLtask.h
+foc_yummyyae\ctrltask.o: ../USER/FOC/foc_calibrate.h
+foc_yummyyae\ctrltask.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+foc_yummyyae\ctrltask.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+foc_yummyyae\ctrltask.o: ../USER/pid.h
+foc_yummyyae\ctrltask.o: ../USER/datatype.h
+foc_yummyyae\ctrltask.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+foc_yummyyae\ctrltask.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+foc_yummyyae\ctrltask.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\string.h
+foc_yummyyae\ctrltask.o: D:\Programing\Keil5\ARM\ARMCC\Bin\..\include\math.h
