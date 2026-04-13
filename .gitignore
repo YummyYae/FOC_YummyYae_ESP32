@@ -1,0 +1,15 @@
+build/
+.vscode/
+sdkconfig.old
+reference/STM32_Example/MDK-ARM/**/*.o
+reference/STM32_Example/MDK-ARM/**/*.d
+reference/STM32_Example/MDK-ARM/**/*.crf
+reference/STM32_Example/MDK-ARM/**/*.axf
+reference/STM32_Example/MDK-ARM/**/*.map
+reference/STM32_Example/MDK-ARM/**/*.hex
+reference/STM32_Example/MDK-ARM/**/*.htm
+reference/STM32_Example/MDK-ARM/**/*.dep
+reference/STM32_Example/MDK-ARM/**/*.lnp
+reference/STM32_Example/MDK-ARM/**/*.lst
+reference/STM32_Example/MDK-ARM/**/*.iex
+reference/STM32_Example/MDK-ARM/**/*.uvguix.*

@@ -2,7 +2,7 @@
 #include "esp_log.h"
 #include "esp_system.h"
 #include "foc_driver_esp32.h"
-#include "foc_task.h"
+#include "foc_loop.h"
 
 void app_main(void)
 {

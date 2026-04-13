@@ -1,53 +1,69 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
+# Yummy FOC ESP32
 
-# Hello World Example
+An ESP32-S3 FOC project derived from a minimal ESP-IDF template and reorganized into clear runtime modules.
 
-Starts a FreeRTOS task to print "Hello World".
+## Project Layout
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
-
-## How to use example
-
-Follow detailed instructions provided specifically for this example.
-
-Select the instructions depending on Espressif chip installed on your development board:
-
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
-
-```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+```text
+.
+├─ components
+│  ├─ foc
+│  │  ├─ include
+│  │  │  ├─ foc_types.h
+│  │  │  ├─ foc_control.h
+│  │  │  ├─ foc_output.h
+│  │  │  ├─ foc_loop.h
+│  │  │  └─ foc_driver_esp32.h
+│  │  └─ src
+│  │     ├─ foc_control.c
+│  │     ├─ foc_output.c
+│  │     ├─ foc_loop.c
+│  │     └─ foc_driver_esp32.c
+│  └─ sensors
+│     ├─ include
+│     │  └─ mt6701.h
+│     └─ src
+│        └─ mt6701.c
+├─ docs
+├─ main
+├─ reference
+│  └─ STM32_Example
+└─ sdkconfig
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+## Module Responsibilities
 
-## Troubleshooting
+- `components/foc/src/foc_control.c`
+  Maintains FOC state, LUT generation, angle conversion, and generic control-side helpers.
+- `components/foc/src/foc_output.c`
+  Converts `Ud/Uq` into three-phase PWM through the q15 inverse Park plus centered SVPWM path.
+- `components/foc/src/foc_loop.c`
+  Contains the fast loop logic, shaft angle acquisition entry, and electrical angle derivation.
+- `components/foc/src/foc_driver_esp32.c`
+  Owns ESP32-specific startup, PWM, timer ISR binding, core placement, NVS calibration storage, and startup calibration flow.
+- `components/sensors/src/mt6701.c`
+  Owns the MT6701 SPI interface and mechanical angle readout.
+- `reference/STM32_Example`
+  Keeps the original STM32 reference project for porting comparison only. It is not part of the ESP-IDF build.
 
-* Program upload failure
+## Hardware Mapping
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+- DRV8313 `IN_A` -> GPIO17
+- DRV8313 `IN_B` -> GPIO18
+- DRV8313 `IN_C` -> GPIO8
+- MT6701 `MOSI` -> GPIO42
+- MT6701 `MISO` -> GPIO41
+- MT6701 `SCK` -> GPIO40
+- MT6701 `NSS` -> GPIO39
 
-## Technical support and feedback
+## Build Notes
 
-Please use the following feedback channels:
+- Project name: `yummy_foc_esp32`
+- Main application entry: `main/main.c`
+- ESP-IDF auto-discovers components under `components/`
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
+## Suggested Next Cleanup
 
-We will get back to you as soon as possible.
+- Normalize legacy comment encoding in older source blocks.
+- Split calibration strategy out of `foc_driver_esp32.c` if startup logic grows further.
+- Add a dedicated current-sense component once ADC sampling is introduced.

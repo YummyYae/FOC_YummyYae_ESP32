@@ -1,15 +1,15 @@
 {
     "version":            "1.2",
-    "project_name":       "hello_world",
-    "project_version":    "17dce6b-dirty",
+    "project_name":       "yummy_foc_esp32",
+    "project_version":    "796cc5a-dirty",
     "project_path":       "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32",
     "idf_path":           "D:/Programing/ESP_IDF/v5.5.1/esp-idf",
     "build_dir":          "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build",
     "config_file":        "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/sdkconfig",
     "config_defaults":    "",
     "bootloader_elf":     "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/bootloader/bootloader.elf",
-    "app_elf":            "hello_world.elf",
-    "app_bin":            "hello_world.bin",
+    "app_elf":            "yummy_foc_esp32.elf",
+    "app_bin":            "yummy_foc_esp32.bin",
     "build_type":         "flash_app",
     "git_revision":       "v5.5.1",
     "target":             "esp32s3",
@@ -25,8 +25,8 @@
         "COMPONENT_KCONFIGS_PROJBUILD" : "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/bootloader/Kconfig.projbuild;D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_app_format/Kconfig.projbuild;D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_rom/Kconfig.projbuild;D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esptool_py/Kconfig.projbuild;D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/partition_table/Kconfig.projbuild"
     },
     "common_component_reqs": [ "cxx", "newlib", "freertos", "esp_hw_support", "heap", "log", "soc", "hal", "esp_rom", "esp_common", "esp_system", "xtensa" ],
-    "build_components" : [ "app_update", "bootloader", "bootloader_support", "cxx", "driver", "efuse", "esp_app_format", "esp_bootloader_format", "esp_common", "esp_driver_ana_cmpr", "esp_driver_bitscrambler", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_tsens", "esp_driver_twai", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_hw_support", "esp_mm", "esp_partition", "esp_pm", "esp_ringbuf", "esp_rom", "esp_security", "esp_system", "esp_timer", "esptool_py", "freertos", "hal", "heap", "log", "main", "mbedtls", "newlib", "nvs_flash", "partition_table", "pthread", "sdmmc", "soc", "spi_flash", "xtensa", "" ],
-    "build_component_paths" : [ "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/app_update", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/bootloader", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/bootloader_support", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/cxx", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/driver", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/efuse", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_app_format", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_bootloader_format", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_common", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_ana_cmpr", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_bitscrambler", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_dac", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_gpio", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_gptimer", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_i2c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_i2s", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_ledc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_mcpwm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_parlio", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_pcnt", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_rmt", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdio", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdmmc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdspi", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_spi", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_tsens", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_twai", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_uart", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_usb_serial_jtag", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_hw_support", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_mm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_partition", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_pm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_ringbuf", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_rom", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_security", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_system", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_timer", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esptool_py", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/freertos", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/hal", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/heap", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/log", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/mbedtls", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/newlib", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/nvs_flash", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/partition_table", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/pthread", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/soc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/spi_flash", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/xtensa", "" ],
+    "build_components" : [ "app_update", "bootloader", "bootloader_support", "cxx", "driver", "efuse", "esp_app_format", "esp_bootloader_format", "esp_common", "esp_driver_ana_cmpr", "esp_driver_bitscrambler", "esp_driver_dac", "esp_driver_gpio", "esp_driver_gptimer", "esp_driver_i2c", "esp_driver_i2s", "esp_driver_ledc", "esp_driver_mcpwm", "esp_driver_parlio", "esp_driver_pcnt", "esp_driver_rmt", "esp_driver_sdio", "esp_driver_sdm", "esp_driver_sdmmc", "esp_driver_sdspi", "esp_driver_spi", "esp_driver_tsens", "esp_driver_twai", "esp_driver_uart", "esp_driver_usb_serial_jtag", "esp_hw_support", "esp_mm", "esp_partition", "esp_pm", "esp_ringbuf", "esp_rom", "esp_security", "esp_system", "esp_timer", "esptool_py", "foc", "freertos", "hal", "heap", "log", "main", "mbedtls", "newlib", "nvs_flash", "partition_table", "pthread", "sdmmc", "sensors", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/app_update", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/bootloader", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/bootloader_support", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/cxx", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/driver", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/efuse", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_app_format", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_bootloader_format", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_common", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_ana_cmpr", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_bitscrambler", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_dac", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_gpio", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_gptimer", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_i2c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_i2s", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_ledc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_mcpwm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_parlio", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_pcnt", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_rmt", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdio", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdmmc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_sdspi", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_spi", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_tsens", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_twai", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_uart", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_driver_usb_serial_jtag", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_hw_support", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_mm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_partition", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_pm", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_ringbuf", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_rom", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_security", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_system", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esp_timer", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/esptool_py", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/freertos", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/hal", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/heap", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/log", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/mbedtls", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/newlib", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/nvs_flash", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/partition_table", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/pthread", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/sensors", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/soc", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/spi_flash", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/xtensa", "" ],
     "build_component_info" : {
         "app_update": {
             "alias": "idf::app_update",
@@ -628,6 +628,21 @@
             "sources": [],
             "include_dirs": []
         },
+        "foc": {
+            "alias": "idf::foc",
+            "target": "___idf_foc",
+            "prefix": "idf",
+            "dir": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc",
+            "type": "LIBRARY",
+            "lib": "__idf_foc",
+            "reqs": [ "driver", "nvs_flash", "sensors" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/foc/libfoc.a",
+            "sources": [ "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc/src/foc_control.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc/src/foc_output.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc/src/foc_loop.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc/src/foc_driver_esp32.c" ],
+            "include_dirs": [ "include" ]
+        },
         "freertos": {
             "alias": "idf::freertos",
             "target": "___idf_freertos",
@@ -695,13 +710,13 @@
             "dir": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main",
             "type": "LIBRARY",
             "lib": "__idf_main",
-            "reqs": [ "driver", "nvs_flash" ],
+            "reqs": [ "foc", "sensors" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/main/libmain.a",
-            "sources": [ "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main/main.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/FOC/foc_calibrate.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/FOC/foc_lib.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/FOC/foc_driver_esp32.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/FOC/foc_task.c", "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/BSPDriver/MT6701.c" ],
-            "include_dirs": [ "../FOC", ".." ]
+            "sources": [ "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main/main.c" ],
+            "include_dirs": [ "." ]
         },
         "mbedtls": {
             "alias": "idf::mbedtls",
@@ -791,6 +806,21 @@
             "managed_priv_reqs": [],
             "file": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/sdmmc/libsdmmc.a",
             "sources": [ "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sdmmc_cmd.c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sdmmc_common.c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sdmmc_init.c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sdmmc_io.c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sdmmc_mmc.c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sdmmc_sd.c", "D:/Programing/ESP_IDF/v5.5.1/esp-idf/components/sdmmc/sd_pwr_ctrl/sd_pwr_ctrl.c" ],
+            "include_dirs": [ "include" ]
+        },
+        "sensors": {
+            "alias": "idf::sensors",
+            "target": "___idf_sensors",
+            "prefix": "idf",
+            "dir": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/sensors",
+            "type": "LIBRARY",
+            "lib": "__idf_sensors",
+            "reqs": [ "driver" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "file": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/sensors/libsensors.a",
+            "sources": [ "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/sensors/src/mt6701.c" ],
             "include_dirs": [ "include" ]
         },
         "soc": {
@@ -2142,11 +2172,35 @@
             "prefix": "idf",
             "dir": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main",
             "lib": "__idf_main",
-            "reqs": [ "driver", "nvs_flash" ],
+            "reqs": [ "foc", "sensors" ],
             "priv_reqs": [],
             "managed_reqs": [],
             "managed_priv_reqs": [],
-            "include_dirs": [ "../FOC", ".." ]
+            "include_dirs": [ "." ]
+        },
+        "foc": {
+            "alias": "idf::foc",
+            "target": "___idf_foc",
+            "prefix": "idf",
+            "dir": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/foc",
+            "lib": "__idf_foc",
+            "reqs": [ "driver", "nvs_flash", "sensors" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "include" ]
+        },
+        "sensors": {
+            "alias": "idf::sensors",
+            "target": "___idf_sensors",
+            "prefix": "idf",
+            "dir": "C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/components/sensors",
+            "lib": "__idf_sensors",
+            "reqs": [ "driver" ],
+            "priv_reqs": [],
+            "managed_reqs": [],
+            "managed_priv_reqs": [],
+            "include_dirs": [ "include" ]
         }
     },
     "debug_prefix_map_gdbinit": "",

@@ -92,5 +92,9 @@ C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/esp_driver_ledc/l
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/esp_driver_usb_serial_jtag/libesp_driver_usb_serial_jtag.a
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/esp_driver_twai/libesp_driver_twai.a
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/nvs_flash/libnvs_flash.a
-C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/main/libmain.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/sensors/libsensors.a
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/driver/libdriver.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/foc/libfoc.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/sensors/libsensors.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/main/libmain.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/foc/libfoc.a

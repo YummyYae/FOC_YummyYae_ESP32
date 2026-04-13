@@ -17,4 +17,4 @@ set confirm off
 set confirm on
 
 # Load application symbols
-file C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/hello_world.elf
+file C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/yummy_foc_esp32.elf
