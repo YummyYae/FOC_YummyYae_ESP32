@@ -1,6 +1,7 @@
 #ifndef TLC5947_H
 #define TLC5947_H
 
+#include <stddef.h>
 #include <stdint.h>
 #include "esp_err.h"
 
@@ -31,6 +32,7 @@ void tlc5947_clear_pov_buffer(void);
 esp_err_t tlc5947_set_pov_pixel(uint16_t column, uint16_t led_index, uint8_t red, uint8_t green, uint8_t blue);
 void tlc5947_fill_pov_test_pattern(void);
 esp_err_t tlc5947_update_from_pov_column(uint16_t column);
+esp_err_t tlc5947_load_pov_rgb_frame(const uint8_t *rgb_frame, size_t len);
 
 #ifdef __cplusplus
 }

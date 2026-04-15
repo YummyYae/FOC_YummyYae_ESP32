@@ -1,7 +1,7 @@
 #include "tlc5947.h"
 
-#include <stdbool.h>
 #include <math.h>
+#include <stdbool.h>
 #include <string.h>
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
@@ -25,7 +25,8 @@
 #define TLC5947_RGB_B 2
 #define TLC5947_RGB8_MAX 255U
 #define TLC5947_PWM_MAX 1024U
-#define TLC5947_GAMMA 2.2f
+#define TLC5947_GAMMA 4.2f
+#define TLC5947_IMAGE_FLIP_VERTICAL 1
 
 static const char *TAG = "tlc5947";
 static spi_device_handle_t s_tlc_dev = NULL;
@@ -41,37 +42,6 @@ static uint16_t s_r_channel_map[TLC5947_LED_COUNT];
 static uint16_t s_g_channel_map[TLC5947_LED_COUNT];
 static uint16_t s_b_channel_map[TLC5947_LED_COUNT];
 static bool s_channel_map_ready = false;
-
-#define POV_HELLO_ROW_BASE 12U
-#define POV_HELLO_H_COL 24U
-#define POV_HELLO_E_COL 30U
-#define POV_HELLO_L1_COL 36U
-#define POV_HELLO_L2_COL 42U
-#define POV_HELLO_O_COL 48U
-
-#define POV_H_R 0xFF
-#define POV_H_G 0x28
-#define POV_H_B 0x28
-#define POV_E_R 0xFF
-#define POV_E_G 0x78
-#define POV_E_B 0x1E
-#define POV_L1_R 0xFF
-#define POV_L1_G 0xC8
-#define POV_L1_B 0x1E
-#define POV_L2_R 0x8C
-#define POV_L2_G 0xFF
-#define POV_L2_B 0x28
-#define POV_O_R 0x1E
-#define POV_O_G 0xFF
-#define POV_O_B 0xB4
-
-#define POV_LED(col, row, r, g, b) [col][row] = {r, g, b}
-
-// 192*32*3 上电图案大数组（十六进制定义）。
-// 你后续可以直接改 [列][行] = {R,G,B} 这一层，不需要改任何绘制函数。
-uint8_t s_pov_rgb_boot[TLC5947_POV_COLUMNS][TLC5947_LED_COUNT][3] = {0};
-
-#undef POV_LED
 
 static inline uint16_t tlc5947_clip_12bit(uint16_t v)
 {
@@ -95,6 +65,7 @@ static void tlc5947_build_gamma_lut(void)
         }
         s_gamma_lut[i] = (uint16_t)pwm;
     }
+    s_gamma_lut[TLC5947_RGB8_MAX] = TLC5947_PWM_MAX;
 }
 
 static inline uint16_t tlc5947_map_channel(uint16_t led_index, uint8_t color)
@@ -120,7 +91,6 @@ static void tlc5947_build_channel_map_once(void)
     if (s_channel_map_ready) {
         return;
     }
-
     for (uint16_t led = 0; led < TLC5947_LED_COUNT; ++led) {
         s_r_channel_map[led] = tlc5947_map_channel(led, TLC5947_RGB_R);
         s_g_channel_map[led] = tlc5947_map_channel(led, TLC5947_RGB_G);
@@ -279,7 +249,6 @@ void tlc5947_clear_rgb_buffer(void)
 esp_err_t tlc5947_set_led_rgb(uint16_t led_index, uint8_t red, uint8_t green, uint8_t blue)
 {
     ESP_RETURN_ON_FALSE(led_index < TLC5947_LED_COUNT, ESP_ERR_INVALID_ARG, TAG, "led index out of range");
-
     s_led_rgb[led_index][TLC5947_RGB_R] = red;
     s_led_rgb[led_index][TLC5947_RGB_G] = green;
     s_led_rgb[led_index][TLC5947_RGB_B] = blue;
@@ -289,13 +258,11 @@ esp_err_t tlc5947_set_led_rgb(uint16_t led_index, uint8_t red, uint8_t green, ui
 esp_err_t tlc5947_update_from_rgb_buffer(void)
 {
     tlc5947_build_channel_map_once();
-
     for (uint16_t led = 0; led < TLC5947_LED_COUNT; ++led) {
         s_gray[s_r_channel_map[led]] = tlc5947_rgb8_to_pwm(s_led_rgb[led][TLC5947_RGB_R]);
         s_gray[s_g_channel_map[led]] = tlc5947_rgb8_to_pwm(s_led_rgb[led][TLC5947_RGB_G]);
         s_gray[s_b_channel_map[led]] = tlc5947_rgb8_to_pwm(s_led_rgb[led][TLC5947_RGB_B]);
     }
-
     return tlc5947_flush();
 }
 
@@ -334,7 +301,7 @@ esp_err_t tlc5947_set_pov_pixel(uint16_t column, uint16_t led_index, uint8_t red
 
 void tlc5947_fill_pov_test_pattern(void)
 {
-    memcpy(s_pov_rgb, s_pov_rgb_boot, sizeof(s_pov_rgb));
+    tlc5947_clear_pov_buffer();
 }
 
 esp_err_t tlc5947_update_from_pov_column(uint16_t column)
@@ -347,8 +314,32 @@ esp_err_t tlc5947_update_from_pov_column(uint16_t column)
         s_gray[s_g_channel_map[led]] = tlc5947_rgb8_to_pwm(s_pov_rgb[column][led][TLC5947_RGB_G]);
         s_gray[s_b_channel_map[led]] = tlc5947_rgb8_to_pwm(s_pov_rgb[column][led][TLC5947_RGB_B]);
     }
-
     return tlc5947_flush();
+}
+
+esp_err_t tlc5947_load_pov_rgb_frame(const uint8_t *rgb_frame, size_t len)
+{
+    ESP_RETURN_ON_FALSE(rgb_frame != NULL, ESP_ERR_INVALID_ARG, TAG, "rgb_frame is null");
+    ESP_RETURN_ON_FALSE(len == (size_t)(TLC5947_POV_COLUMNS * TLC5947_LED_COUNT * 3),
+                        ESP_ERR_INVALID_ARG,
+                        TAG,
+                        "rgb frame size invalid");
+
+    for (uint16_t row = 0; row < TLC5947_LED_COUNT; ++row) {
+        const size_t row_base = (size_t)row * TLC5947_POV_COLUMNS * 3;
+#if TLC5947_IMAGE_FLIP_VERTICAL
+        const uint16_t dst_row = (uint16_t)(TLC5947_LED_COUNT - 1U - row);
+#else
+        const uint16_t dst_row = row;
+#endif
+        for (uint16_t col = 0; col < TLC5947_POV_COLUMNS; ++col) {
+            const size_t idx = row_base + (size_t)col * 3;
+            s_pov_rgb[col][dst_row][TLC5947_RGB_R] = rgb_frame[idx + 0];
+            s_pov_rgb[col][dst_row][TLC5947_RGB_G] = rgb_frame[idx + 1];
+            s_pov_rgb[col][dst_row][TLC5947_RGB_B] = rgb_frame[idx + 2];
+        }
+    }
+    return ESP_OK;
 }
 
 uint32_t tlc5947_get_last_flush_time_us(void)
@@ -360,4 +351,3 @@ uint32_t tlc5947_get_nominal_shift_time_us(void)
 {
     return (uint32_t)((TLC5947_TOTAL_BITS * 1000000ULL) / TLC5947_SPI_CLOCK_HZ);
 }
-

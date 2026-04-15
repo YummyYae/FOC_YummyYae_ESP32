@@ -1,11 +1,15 @@
 #include "ap_task.h"
 
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include <unistd.h>
 #include <sys/socket.h>
-#include <sys/select.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+
 #include "esp_check.h"
 #include "esp_event.h"
 #include "esp_log.h"
@@ -14,21 +18,25 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
+#include "tlc5947.h"
 
 #define AP_TASK_CORE 0
 #define AP_TASK_STACK_SIZE 6144
-#define AP_TASK_PRIORITY 3
+#define AP_TASK_PRIORITY 7
 
 #define AP_WIFI_SSID "FOC_LED_AP"
 #define AP_WIFI_PASS "12345678"
 #define AP_WIFI_CHANNEL 6
 #define AP_WIFI_MAX_CONN 2
 
-#define AP_UDP_PORT 5005
-#define AP_UDP_RX_BUF 256
+#define AP_TCP_PORT 5005
+#define AP_FRAME_MAGIC "TCP1"
+#define AP_FRAME_HEADER_SIZE 8
+#define AP_IMG_FRAME_BYTES (TLC5947_POV_COLUMNS * TLC5947_LED_COUNT * 3)
 
 static const char *TAG = "ap_task";
 static TaskHandle_t s_ap_task = NULL;
+static uint8_t s_img_frame[AP_IMG_FRAME_BYTES];
 
 static esp_err_t ap_wifi_init(void)
 {
@@ -70,73 +78,94 @@ static esp_err_t ap_wifi_init(void)
     ESP_RETURN_ON_ERROR(esp_wifi_set_config(WIFI_IF_AP, &wifi_config), TAG, "set ap config failed");
     ESP_RETURN_ON_ERROR(esp_wifi_start(), TAG, "wifi start failed");
 
-    ESP_LOGI(TAG, "AP started: ssid=%s pass=%s channel=%d", AP_WIFI_SSID, AP_WIFI_PASS, AP_WIFI_CHANNEL);
+    ESP_LOGI(TAG, "AP started: ssid=%s channel=%d", AP_WIFI_SSID, AP_WIFI_CHANNEL);
     return ESP_OK;
 }
 
-static void ap_udp_server_loop(void)
+static bool recv_exact(int sock, uint8_t *dst, size_t len)
 {
-    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
-    if (sock < 0) {
-        ESP_LOGE(TAG, "create socket failed");
+    size_t got = 0;
+    while (got < len) {
+        int n = recv(sock, dst + got, len - got, 0);
+        if (n <= 0) {
+            return false;
+        }
+        got += (size_t)n;
+    }
+    return true;
+}
+
+static void ap_tcp_server_loop(void)
+{
+    int server = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
+    if (server < 0) {
+        ESP_LOGE(TAG, "create tcp socket failed errno=%d", errno);
         return;
     }
+
+    int reuse = 1;
+    setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 
     struct sockaddr_in server_addr = {
         .sin_family = AF_INET,
-        .sin_port = htons(AP_UDP_PORT),
+        .sin_port = htons(AP_TCP_PORT),
         .sin_addr.s_addr = htonl(INADDR_ANY),
     };
 
-    if (bind(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        ESP_LOGE(TAG, "bind udp %d failed", AP_UDP_PORT);
-        close(sock);
+    if (bind(server, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        ESP_LOGE(TAG, "bind tcp %d failed errno=%d", AP_TCP_PORT, errno);
+        close(server);
+        return;
+    }
+    if (listen(server, 1) < 0) {
+        ESP_LOGE(TAG, "listen failed errno=%d", errno);
+        close(server);
         return;
     }
 
-    ESP_LOGI(TAG, "UDP server listening on port %d", AP_UDP_PORT);
+    ESP_LOGI(TAG, "TCP server listening on port %d", AP_TCP_PORT);
 
-    struct sockaddr_in last_client = {0};
-    socklen_t last_client_len = sizeof(last_client);
-    bool has_client = false;
-    uint32_t heartbeat = 0;
-    char rx_buf[AP_UDP_RX_BUF];
-    char tx_buf[AP_UDP_RX_BUF];
-
+    uint8_t hdr[AP_FRAME_HEADER_SIZE];
     while (true) {
-        fd_set readfds;
-        FD_ZERO(&readfds);
-        FD_SET(sock, &readfds);
+        struct sockaddr_in client_addr = {0};
+        socklen_t addr_len = sizeof(client_addr);
+        int client = accept(server, (struct sockaddr *)&client_addr, &addr_len);
+        if (client < 0) {
+            ESP_LOGW(TAG, "accept failed errno=%d", errno);
+            continue;
+        }
+        ESP_LOGI(TAG, "tcp client connected");
 
-        struct timeval tv = {
-            .tv_sec = 0,
-            .tv_usec = 100000,
-        };
+        while (true) {
+            if (!recv_exact(client, hdr, sizeof(hdr))) {
+                break;
+            }
+            if (memcmp(hdr, AP_FRAME_MAGIC, 4) != 0) {
+                ESP_LOGW(TAG, "invalid frame magic");
+                break;
+            }
 
-        int sel = select(sock + 1, &readfds, NULL, NULL, &tv);
-        if (sel > 0 && FD_ISSET(sock, &readfds)) {
-            struct sockaddr_in client_addr = {0};
-            socklen_t addr_len = sizeof(client_addr);
-            int len = recvfrom(sock, rx_buf, sizeof(rx_buf) - 1, 0, (struct sockaddr *)&client_addr, &addr_len);
-            if (len > 0) {
-                rx_buf[len] = '\0';
-                last_client = client_addr;
-                last_client_len = addr_len;
-                has_client = true;
+            const uint16_t frame_id = (uint16_t)(hdr[4] | ((uint16_t)hdr[5] << 8));
+            const uint16_t payload_len = (uint16_t)(hdr[6] | ((uint16_t)hdr[7] << 8));
+            if (payload_len != AP_IMG_FRAME_BYTES) {
+                ESP_LOGW(TAG, "invalid frame len=%u", (unsigned)payload_len);
+                break;
+            }
 
-                snprintf(tx_buf, sizeof(tx_buf), "AP_ACK:%s", rx_buf);
-                sendto(sock, tx_buf, strlen(tx_buf), 0, (struct sockaddr *)&client_addr, addr_len);
+            if (!recv_exact(client, s_img_frame, AP_IMG_FRAME_BYTES)) {
+                break;
+            }
+
+            if (tlc5947_load_pov_rgb_frame(s_img_frame, AP_IMG_FRAME_BYTES) == ESP_OK) {
+                ESP_LOGI(TAG, "image frame applied: id=%u", (unsigned)frame_id);
+            } else {
+                ESP_LOGW(TAG, "image frame apply failed: id=%u", (unsigned)frame_id);
             }
         }
 
-        if (has_client) {
-            heartbeat++;
-            if (heartbeat >= 10) {
-                heartbeat = 0;
-                snprintf(tx_buf, sizeof(tx_buf), "AP_HEARTBEAT:%lu", (unsigned long)xTaskGetTickCount());
-                sendto(sock, tx_buf, strlen(tx_buf), 0, (struct sockaddr *)&last_client, last_client_len);
-            }
-        }
+        shutdown(client, 0);
+        close(client);
+        ESP_LOGW(TAG, "tcp client disconnected");
     }
 }
 
@@ -144,7 +173,7 @@ static void ap_task_entry(void *arg)
 {
     (void)arg;
     ESP_ERROR_CHECK(ap_wifi_init());
-    ap_udp_server_loop();
+    ap_tcp_server_loop();
     vTaskDelete(NULL);
 }
 
@@ -164,4 +193,11 @@ esp_err_t ap_task_start(void)
     ESP_RETURN_ON_FALSE(ok == pdPASS, ESP_FAIL, TAG, "create ap task failed");
     ESP_LOGI(TAG, "AP task started on core%d", AP_TASK_CORE);
     return ESP_OK;
+}
+
+int ap_task_send_udp_text(const char *data, size_t len)
+{
+    (void)data;
+    (void)len;
+    return -1;
 }
