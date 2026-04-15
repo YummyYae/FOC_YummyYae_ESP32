@@ -85,7 +85,7 @@ void foc_control_init(void)
     foc_params.electrical_angle_u16 = 0U;
     foc_params.mechanical_angle_unwrapped = 0.0f;
     foc_params.mechanical_rpm = 0.0f;
-    foc_params.target_mechanical_rpm = 350.0f;
+    foc_params.target_mechanical_rpm = 50.0f;
     foc_params.uq = 0.0f;
     foc_params.ud = 0.0f;
     foc_params.voltage_power_supply = 20.0f;

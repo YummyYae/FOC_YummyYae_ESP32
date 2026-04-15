@@ -4,6 +4,8 @@
 #include "esp_system.h"
 #include "foc_driver_esp32.h"
 #include "foc_task.h"
+#include "led_pov_task.h"
+#include "ap_task.h"
 
 void app_main(void)
 {
@@ -20,6 +22,16 @@ void app_main(void)
 
     if (control_task_start() != ESP_OK) {
         ESP_LOGE("app_main", "Control task start failed");
+        return;
+    }
+
+    if (led_pov_task_start() != ESP_OK) {
+        ESP_LOGE("app_main", "LED POV task start failed");
+        return;
+    }
+
+    if (ap_task_start() != ESP_OK) {
+        ESP_LOGE("app_main", "AP task start failed");
         return;
     }
 }

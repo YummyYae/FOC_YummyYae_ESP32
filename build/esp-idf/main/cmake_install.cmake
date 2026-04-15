@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/main
+# Install script for directory: C:/Users/CTY/Desktop/FOC_YummyYae_ESP32/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/hello_world")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/yummy_foc_esp32")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
