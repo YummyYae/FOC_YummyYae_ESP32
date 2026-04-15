@@ -314,6 +314,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/algorithm/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/tasks/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/main/cmake_install.cmake")
 endif()
 

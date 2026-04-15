@@ -86,17 +86,3 @@ esp_err_t MT6701_ReadAngle(uint16_t *angle_raw, float *angle_rad, uint8_t *field
 
     return ESP_OK;
 }
-
-uint16_t MT6701_GetRawData(void)
-{
-    uint16_t raw = 0U;
-    (void)MT6701_ReadAngle(&raw, NULL, NULL);
-    return raw;
-}
-
-float MT6701_GetAngleRad(void)
-{
-    float angle = 0.0f;
-    (void)MT6701_ReadAngle(NULL, &angle, NULL);
-    return angle;
-}

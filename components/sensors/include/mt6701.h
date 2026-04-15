@@ -16,8 +16,6 @@ extern "C" {
 #define MT6701_NSS_GPIO 39
 
 esp_err_t MT6701_Init(void);
-uint16_t MT6701_GetRawData(void);
-float MT6701_GetAngleRad(void);
 esp_err_t MT6701_ReadAngle(uint16_t *angle_raw, float *angle_rad, uint8_t *field_status);
 
 #ifdef __cplusplus

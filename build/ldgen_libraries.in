@@ -96,5 +96,9 @@ $<TARGET_FILE:idf::sensors>
 $<TARGET_FILE:__idf_driver>
 $<TARGET_FILE:idf::foc>
 $<TARGET_FILE:__idf_sensors>
-$<TARGET_FILE:idf::main>
+$<TARGET_FILE:idf::algorithm>
+$<TARGET_FILE:idf::tasks>
 $<TARGET_FILE:__idf_foc>
+$<TARGET_FILE:__idf_algorithm>
+$<TARGET_FILE:idf::main>
+$<TARGET_FILE:__idf_tasks>

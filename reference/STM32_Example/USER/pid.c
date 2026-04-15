@@ -17,31 +17,19 @@
 
 #include "pid.h"
 
-// FOC电流环PID参数宏定义
-#define IQ_PID_KP     12.6f//-0.10f//0.00145f      // Iq环比例系数
-#define IQ_PID_KI     2.64f//-0.18f//3.833f      // Iq环积分系数  
-#define IQ_PID_KD     0.0f      // Iq环微分系数
-#define IQ_PID_MAX_OUT    1000.0f     // Iq环最大输出（电压）
-#define IQ_PID_MAX_IOUT   1000.0f      // Iq环最大积分输出
-
-#define ID_PID_KP      12.6f//-0.1f//0.00145f      // Id环比例系数
-#define ID_PID_KI      2.64f//-0.18f//3.833f      // Id环积分系数
-#define ID_PID_KD     0.0f      // Id环微分系数  
-#define ID_PID_MAX_OUT    1000.0f     // Id环最大输出（电压）
-#define ID_PID_MAX_IOUT   1000.0f      // Id环最大积分输出
 
 // FOC速度环PID参数宏定义
-#define SPEED_PID_KP     0.08f//0.012f       // 速度环比例系数
+#define SPEED_PID_KP     0.00f//0.012f       // 速度环比例系数
 #define SPEED_PID_KI     0.00f//0.00004f       // 速度环积分系数
-#define SPEED_PID_KD     0.24f//0.37// 速度环微分系数
+#define SPEED_PID_KD     0.0f//0.37// 速度环微分系数
 #define SPEED_PID_MAX_OUT    20.0f       // 速度环最大输出（电流A）
 #define SPEED_PID_MAX_IOUT   1.0f       // 速度环最大积分输出
 
 // FOC位置环PID宏定义
-#define POSITION_PID_KP     15.0f       // 位置环比例系数 (需要根据实际慢慢调)
+#define POSITION_PID_KP     0.0f       // 位置环比例系数 (需要根据实际慢慢调)
 #define POSITION_PID_KI     0.0f       // 位置环积分系数 (通常位置环只用P，也可以加极少量I)
 #define POSITION_PID_KD     0.00f      // 位置环微分系数
-#define POSITION_PID_MAX_OUT    120.0f // 位置环最大输出（即最大允许目标速度 rad/s）
+#define POSITION_PID_MAX_OUT    0.0f // 位置环最大输出（即最大允许目标速度 rad/s）
 #define POSITION_PID_MAX_IOUT   10.0f  // 位置环最大积分输出
 
 #define LimitMax(input, max)   \

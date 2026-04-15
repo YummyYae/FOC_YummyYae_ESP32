@@ -96,5 +96,9 @@ C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/sensors/libsensor
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/driver/libdriver.a
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/foc/libfoc.a
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/sensors/libsensors.a
-C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/main/libmain.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/algorithm/libalgorithm.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/tasks/libtasks.a
 C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/foc/libfoc.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/algorithm/libalgorithm.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/main/libmain.a
+C:/Users/CTY/Desktop/YummyFOC/FOC_YummyYae_ESP32/build/esp-idf/tasks/libtasks.a
