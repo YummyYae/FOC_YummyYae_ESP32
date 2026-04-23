@@ -24,8 +24,8 @@
 #define TLC5947_RGB_G 1
 #define TLC5947_RGB_B 2
 #define TLC5947_RGB8_MAX 255U
-#define TLC5947_PWM_MAX 1024U
-#define TLC5947_GAMMA 4.2f
+#define TLC5947_PWM_MAX 2047U
+static float s_gamma = 3.2f;
 #define TLC5947_IMAGE_FLIP_VERTICAL 1
 
 static const char *TAG = "tlc5947";
@@ -58,7 +58,7 @@ static void tlc5947_build_gamma_lut(void)
     s_gamma_lut[0] = 0;
     for (uint16_t i = 1; i <= TLC5947_RGB8_MAX; ++i) {
         const float x = (float)i / (float)TLC5947_RGB8_MAX;
-        const float y = powf(x, TLC5947_GAMMA);
+        const float y = powf(x, s_gamma);
         uint32_t pwm = (uint32_t)(y * (float)TLC5947_PWM_MAX + 0.5f);
         if (pwm > TLC5947_PWM_MAX) {
             pwm = TLC5947_PWM_MAX;
@@ -66,6 +66,12 @@ static void tlc5947_build_gamma_lut(void)
         s_gamma_lut[i] = (uint16_t)pwm;
     }
     s_gamma_lut[TLC5947_RGB8_MAX] = TLC5947_PWM_MAX;
+}
+
+void tlc5947_set_gamma(float gamma)
+{
+    s_gamma = gamma;
+    tlc5947_build_gamma_lut();
 }
 
 static inline uint16_t tlc5947_map_channel(uint16_t led_index, uint8_t color)

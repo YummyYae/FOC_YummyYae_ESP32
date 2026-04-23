@@ -49,7 +49,7 @@ static void control_speed_loop_run(bool clear_integral)
     }
 
     const float uq_target = pid_calc(&s_speed_pid, foc_params.mechanical_rpm, foc_params.target_mechanical_rpm);
-    foc_set_voltage_target(0.0f, 0.0f);
+    foc_set_voltage_target(-uq_target, 0.0f);
 }
 
 static void control_position_loop_placeholder(void)
@@ -152,6 +152,11 @@ esp_err_t control_task_start(void)
         return ESP_OK;
     }
 
+    // 若控制任务先于 FOC 参数初始化执行，这里给一个兜底目标速度。
+    if (foc_params.target_mechanical_rpm == 0.0f) {
+        foc_params.target_mechanical_rpm = 100.0f;
+    }
+
     BaseType_t task_ok = xTaskCreatePinnedToCore(control_task_entry,
                                                  "foc_ctrl_core0",
                                                  CONTROL_TASK_STACK_SIZE,
@@ -164,4 +169,3 @@ esp_err_t control_task_start(void)
     ESP_LOGI(TAG, "500Hz control task started on core0, target_rpm=%.1f", foc_params.target_mechanical_rpm);
     return ESP_OK;
 }
-

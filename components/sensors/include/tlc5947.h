@@ -22,6 +22,7 @@ esp_err_t tlc5947_flush(void);
 uint16_t tlc5947_get_channel_count(void);
 
 void tlc5947_clear_rgb_buffer(void);
+void tlc5947_set_gamma(float gamma);
 esp_err_t tlc5947_set_led_rgb(uint16_t led_index, uint8_t red, uint8_t green, uint8_t blue);
 esp_err_t tlc5947_update_from_rgb_buffer(void);
 esp_err_t tlc5947_rainbow_step(uint16_t phase_step, uint8_t max_rgb);

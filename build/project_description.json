@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "yummy_foc_esp32",
-    "project_version":    "48038c6-dirty",
+    "project_version":    "eea9478-dirty",
     "project_path":       "C:/Users/CTY/Desktop/FOC_YummyYae_ESP32",
     "idf_path":           "D:/Programing/ESP_IDF/v5.5.1/esp-idf",
     "build_dir":          "C:/Users/CTY/Desktop/FOC_YummyYae_ESP32/build",

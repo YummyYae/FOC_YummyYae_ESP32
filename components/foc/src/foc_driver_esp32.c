@@ -29,10 +29,12 @@
 #endif
 
 #define FOC_CALIBRATION_NS "foc"
-#define FOC_CALIBRATION_KEY "calib_v4"
-#define FOC_CALIB_MAGIC 0x464F4357U
+#define FOC_CALIBRATION_KEY "calib_v7"
+#define FOC_CALIB_MAGIC 0x464F438AU
+#define FOC_CALIB_VERSION 7U
+#define FOC_FORCE_STARTUP_CALIBRATION 0
 
-#define FOC_CALIB_ALIGN_VOLTAGE 1.5f
+#define FOC_CALIB_ALIGN_VOLTAGE 3.5f
 #define FOC_CALIB_ALIGN_ANGLE (1.5f * (float)M_PI)
 
 typedef struct {
@@ -147,7 +149,7 @@ static bool foc_load_calibration_from_flash(void)
     if (ret != ESP_OK || required_size != sizeof(blob)) {
         return false;
     }
-    if (blob.magic != FOC_CALIB_MAGIC || blob.version != 4U) {
+    if (blob.magic != FOC_CALIB_MAGIC || blob.version != FOC_CALIB_VERSION) {
         return false;
     }
 
@@ -177,7 +179,7 @@ static esp_err_t foc_save_calibration_to_flash(void)
     nvs_handle_t nvs_handle;
     const foc_calibration_blob_t blob = {
         .magic = FOC_CALIB_MAGIC,
-        .version = 4U,
+        .version = FOC_CALIB_VERSION,
         .zero_electric_angle = foc_params.zero_electric_angle,
         .pole_pairs = foc_params.pole_pairs,
         .sensor_direction = (int32_t)foc_params.sensor_direction,
@@ -296,6 +298,7 @@ static esp_err_t foc_run_startup_calibration(void)
 {
     float recorded_mech_angles[100];
     float total_moved = 0.0f;
+    ESP_LOGW(TAG, "Startup calibration begin: align_voltage=%.2fV", FOC_CALIB_ALIGN_VOLTAGE);
 
     // 上电校准流程本身并不复杂，核心就是四步：
     // 1. 先把转子锁到一个已知电角位置；
@@ -331,6 +334,10 @@ static esp_err_t foc_prepare_calibration(void)
 {
     ESP_RETURN_ON_ERROR(foc_storage_init(), TAG, "nvs init failed");
 
+#if FOC_FORCE_STARTUP_CALIBRATION
+    ESP_LOGW(TAG, "Force startup calibration enabled, skip flash load");
+    ESP_RETURN_ON_ERROR(foc_run_startup_calibration(), TAG, "startup calibration failed");
+#else
     if (!foc_load_calibration_from_flash()) {
         ESP_LOGW(TAG, "未找到有效校准参数，开始执行上电校准");
         ESP_RETURN_ON_ERROR(foc_run_startup_calibration(), TAG, "startup calibration failed");
@@ -339,6 +346,7 @@ static esp_err_t foc_prepare_calibration(void)
             s_fast_loop_init_fn();
         }
     }
+#endif
 
     return ESP_OK;
 }
